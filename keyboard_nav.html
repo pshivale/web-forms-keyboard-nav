@@ -15,59 +15,61 @@
 		var left = $(source).offset().left
 		var top = $(source).offset().top
 		console.log(left, top);
+		var compareTop, compareLeft, sortOn;
 		if(event.keyCode == KEY_RIGHT){
-			focusRightElement(source, isOnRight);
+			compareTop = isTopSame;
+			compareLeft = isOnRight;
+			sortOn = compareLeft;
 		}else if(event.keyCode == KEY_LEFT){
-			focusLeftElement(source, isOnLeft);
+			compareTop = isTopSame;
+			compareLeft = isOnLeft;
+			sortOn = compareLeft;
+		}else if(event.keyCode == KEY_DOWN){
+			compareTop = isDown;
+			compareLeft = isLeftSame;
+			sortOn = compareTop;
+		}else if(event.keyCode == KEY_UP){
+			compareTop = isUp;
+			compareLeft = isLeftSame;
+			sortOn = compareTop;
 		}
+		focusElement(source, compareTop, compareLeft, sortOn);
 	}
-	function focusRightElement(source, isNext){
-		var element = getRightElement(source, isNext);
+	function focusElement(source, compareTop, compareLeft, sortOn){
+		var element = getElement(source, compareTop, compareLeft, sortOn);
 		$(element).focus();
 	}
-	function getRightElement(source, isNext){
-		var rightElements = [];
+	function getElement(source, compareTop, compareLeft, sortOn){
+		var candidates = [];
 		$("input").each(function(){
 			console.log(this.id);
 			console.log($(this).offset().top, $(this).offset().left);
-			if(isTopSame(this, source) && isNext(this, source)){
-				rightElements.push(this);
+			if(compareTop(this, source) && compareLeft(this, source)){
+				candidates.push(this);
 			}
 		});
-		$(rightElements).each(function(){
+		$(candidates).each(function(){
 			console.log(this.id);
 		});
-		return $(rightElements).sort(isNext).first();
-		//return $("#last-name");
+		return $(candidates).sort(sortOn).first();
 	}
 	function isOnRight(a, b){
-		// a and b are left values
 		return $(a).offset().left > $(b).offset().left;
 	}
-	function focusLeftElement(source, isNext){
-		var element = getLeftElement(source, isNext);
-		$(element).focus();
-	}
-	function getLeftElement(source, isNext){
-		var leftElements = [];
-		$("input").each(function(){
-			console.log(this.id);
-			if(isTopSame(this, source) && isNext(this, source)){
-				leftElements.push(this);
-			}
-		});
-		$(leftElements).each(function(){
-			console.log(this.id);
-		});
-		return $(leftElements).sort(isNext).first();
-		//return $("#last-name");
-	}
 	function isOnLeft(a, b){
-		// a and b are left values
 		return $(a).offset().left < $(b).offset().left;
+	}
+	function isDown(a, b){
+		return $(a).offset().top > $(b).offset().top;
+	}
+	function isUp(a, b){
+		return $(a).offset().top < $(b).offset().top;
 	}
 	function isTopSame(a, b){
 		return $(a).offset().top == $(b).offset().top;	
+	}
+	function isLeftSame(a, b){
+		return $(a).offset().left == $(b).offset().left;	
 	}
 </script>
 
