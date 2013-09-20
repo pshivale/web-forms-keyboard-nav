@@ -1,0 +1,89 @@
+<!DOCTYPE>
+
+<html>
+
+<head>
+<script type="text/javascript" src="jquery-1.9.1.js"></script>
+<script type="text/javascript">
+	var KEY_RIGHT = 39;
+	var KEY_UP = 38;
+	var KEY_LEFT = 37;
+	var KEY_DOWN = 40;
+	function processKeyDown(event){
+		//alert(event.keyCode);
+		var source = event.target || event.srcElement;
+		var left = $(source).offset().left
+		var top = $(source).offset().top
+		console.log(left, top);
+		if(event.keyCode == KEY_RIGHT){
+			focusRightElement(source, isOnRight);
+		}else if(event.keyCode == KEY_LEFT){
+			focusLeftElement(source, isOnLeft);
+		}
+	}
+	function focusRightElement(source, isNext){
+		var element = getRightElement(source, isNext);
+		$(element).focus();
+	}
+	function getRightElement(source, isNext){
+		var rightElements = [];
+		$("input").each(function(){
+			console.log(this.id);
+			console.log($(this).offset().top, $(this).offset().left);
+			if(isTopSame(this, source) && isNext(this, source)){
+				rightElements.push(this);
+			}
+		});
+		$(rightElements).each(function(){
+			console.log(this.id);
+		});
+		return $(rightElements).sort(isOnRight).first();
+		//return $("#last-name");
+	}
+	function isOnRight(a, b){
+		// a and b are left values
+		$(a).offset().left > $(b).offset().left;
+	}
+	function focusLeftElement(left, top){
+		var element = getLeftElement(left, top);
+		$(element).focus();
+	}
+	function getLeftElement(left, top){
+		var leftElements = [];
+		$("input").each(function(){
+			console.log(this.id);
+			if(isTopSame(this, source) && isNext(this, source)){
+				leftElements.push(this);
+			}
+		});
+		$(leftElements).each(function(){
+			console.log(this.id);
+		});
+		return $(leftElements).sort(isOnLeft).last();
+		//return $("#last-name");
+	}
+	function isOnLeft(a, b){
+		// a and b are left values
+		$(a).offset().left < $(b).offset().left;
+	}
+	function isTopSame(a, b){
+		return $(a).offset().left == $(b).offset().left;	
+	}
+</script>
+
+</head>
+
+<body>
+hello<br/>
+<input id="first-name" onkeydown="processKeyDown(event);"></input>
+<input id="last-name" onkeydown="processKeyDown(event);"></input><br/>
+<input id="age" onkeydown="processKeyDown(event);"></input>
+<input id="email" onkeydown="processKeyDown(event);"></input>
+<input id="phone" onkeydown="processKeyDown(event);"></input>
+<input id="address-1" onkeydown="processKeyDown(event);"></input>
+<input id="address-2" onkeydown="processKeyDown(event);"></input><br/>
+<input id="note-1" onkeydown="processKeyDown(event);"></input>
+<input id="comment" onkeydown="processKeyDown(event);"></input>
+</body>
+
+</html>
