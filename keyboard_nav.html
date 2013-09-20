@@ -16,55 +16,58 @@
 		var top = $(source).offset().top
 		console.log(left, top);
 		if(event.keyCode == KEY_RIGHT){
-			focusRightElement(left, top);
+			focusRightElement(source, isOnRight);
 		}else if(event.keyCode == KEY_LEFT){
-			focusLeftElement(left, top);
+			focusLeftElement(source, isOnLeft);
 		}
 	}
-	function focusRightElement(left, top){
-		var element = getRightElement(left, top);
+	function focusRightElement(source, isNext){
+		var element = getRightElement(source, isNext);
 		$(element).focus();
 	}
-	function getRightElement(left, top){
+	function getRightElement(source, isNext){
 		var rightElements = [];
 		$("input").each(function(){
 			console.log(this.id);
 			console.log($(this).offset().top, $(this).offset().left);
-			if($(this).offset().top == top && $(this).offset().left > left){
+			if(isTopSame(this, source) && isNext(this, source)){
 				rightElements.push(this);
 			}
 		});
 		$(rightElements).each(function(){
 			console.log(this.id);
 		});
-		return $(rightElements).sort(isOnRight).first();
+		return $(rightElements).sort(isNext).first();
 		//return $("#last-name");
 	}
 	function isOnRight(a, b){
 		// a and b are left values
-		$(a).offset().left > $(b).offset().left;
+		return $(a).offset().left > $(b).offset().left;
 	}
-	function focusLeftElement(left, top){
-		var element = getLeftElement(left, top);
+	function focusLeftElement(source, isNext){
+		var element = getLeftElement(source, isNext);
 		$(element).focus();
 	}
-	function getLeftElement(left, top){
+	function getLeftElement(source, isNext){
 		var leftElements = [];
 		$("input").each(function(){
 			console.log(this.id);
-			if($(this).offset().top == top && $(this).offset().left < left){
+			if(isTopSame(this, source) && isNext(this, source)){
 				leftElements.push(this);
 			}
 		});
 		$(leftElements).each(function(){
 			console.log(this.id);
 		});
-		return $(leftElements).sort(isOnLeft).last();
+		return $(leftElements).sort(isNext).first();
 		//return $("#last-name");
 	}
 	function isOnLeft(a, b){
 		// a and b are left values
-		$(a).offset().left < $(b).offset().left;
+		return $(a).offset().left < $(b).offset().left;
+	}
+	function isTopSame(a, b){
+		return $(a).offset().top == $(b).offset().top;	
 	}
 </script>
 
