@@ -4,7 +4,9 @@ $(function() {
 	var KEY_UP = 38;
 	var KEY_LEFT = 37;
 	var KEY_DOWN = 40;
-	$("input").on('keydown', processKeyDown);
+	var FIELD_TYPES = 'input, textarea, button'; 
+	//don't include dropdowns, radio btns as they have thier own behaviour with arrow keys
+	$(FIELD_TYPES).on('keydown', processKeyDown);
 	function processKeyDown(event){
 		//alert(event.keyCode);
 		var source = event.target || event.srcElement;
@@ -46,7 +48,7 @@ $(function() {
 	}
 	function getElement(source, compareTop, compareLeft, sortOn){
 		var candidates = [];
-		$("input").each(function(){
+		$(FIELD_TYPES).each(function(){
 			console.log(this.id);
 			console.log($(this).offset().top, $(this).offset().left);
 			if(compareTop(this, source) && compareLeft(this, source)){
@@ -77,6 +79,7 @@ $(function() {
 		return $(a).offset().left == $(b).offset().left;	
 	}
 	function allowNavigation(source, direction){
+		if($(source).is("input:checkbox")) return true;
 		var cursorPos = doGetCaretPosition(source);
 		var length = $(source).val().length;
 		console.log("cursorPos and length = ", cursorPos, length);
@@ -93,27 +96,34 @@ $(function() {
 	  // Initialize
 	  var iCaretPos = 0;
 
-	  // IE Support
-	  if (document.selection) {
+	  try{
+		  	// IE Support
+		  if (document.selection) {
 
-	    // Set focus on the element
-	    oField.focus ();
+		    // Set focus on the element
+		    oField.focus ();
 
-	    // To get cursor position, get empty selection range
-	    var oSel = document.selection.createRange ();
+		    // To get cursor position, get empty selection range
+		    var oSel = document.selection.createRange ();
 
-	    // Move selection start to 0 position
-	    oSel.moveStart ('character', -oField.value.length);
+		    // Move selection start to 0 position
+		    oSel.moveStart ('character', -oField.value.length);
 
-	    // The caret position is selection length
-	    iCaretPos = oSel.text.length;
+		    // The caret position is selection length
+		    iCaretPos = oSel.text.length;
+		  }
+
+		  // Firefox support
+		  else if (oField.selectionStart || oField.selectionStart == '0')
+		    iCaretPos = oField.selectionStart;
+
+		
+	  }catch(error){
+		iCaretPos = 0;
 	  }
 
-	  // Firefox support
-	  else if (oField.selectionStart || oField.selectionStart == '0')
-	    iCaretPos = oField.selectionStart;
-
-	  // Return results
+    // Return results
 	  return (iCaretPos);
 	}
+	  
 });
