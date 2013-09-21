@@ -5,10 +5,13 @@
 <head>
 <script type="text/javascript" src="jquery-1.9.1.js"></script>
 <script type="text/javascript">
-	var KEY_RIGHT = 39;
+$(function() {
+    console.log( "ready!" );
+    var KEY_RIGHT = 39;
 	var KEY_UP = 38;
 	var KEY_LEFT = 37;
 	var KEY_DOWN = 40;
+	$("input").on('keydown', processKeyDown);
 	function processKeyDown(event){
 		//alert(event.keyCode);
 		var source = event.target || event.srcElement;
@@ -120,21 +123,23 @@
 	  // Return results
 	  return (iCaretPos);
 	}
+});
+	
 </script>
 
 </head>
 
 <body>
 hello<br/>
-<input id="first-name" onkeydown="processKeyDown(event);"></input>
-<input id="last-name" onkeydown="processKeyDown(event);"></input><br/>
-<input id="age" onkeydown="processKeyDown(event);"></input>
-<input id="email" onkeydown="processKeyDown(event);"></input>
-<input id="phone" onkeydown="processKeyDown(event);"></input>
-<input id="address-1" onkeydown="processKeyDown(event);"></input>
-<input id="address-2" onkeydown="processKeyDown(event);"></input><br/>
-<input id="note-1" onkeydown="processKeyDown(event);"></input>
-<input id="comment" onkeydown="processKeyDown(event);"></input>
+<input id="first-name"></input>
+<input id="last-name"></input><br/>
+<input id="age"></input>
+<input id="email"></input>
+<input id="phone"></input>
+<input id="address-1"></input>
+<input id="address-2"></input><br/>
+<input id="note-1"></input>
+<input id="comment"></input>
 </body>
 
 </html>
