@@ -73,10 +73,10 @@ $(function() {
 		return $(a).offset().top < $(b).offset().top;
 	}
 	function isTopSame(a, b){
-		return $(a).offset().top == $(b).offset().top;	
+		return Math.abs($(a).offset().top - $(b).offset().top) <= 10;	
 	}
 	function isLeftSame(a, b){
-		return $(a).offset().left == $(b).offset().left;	
+		return Math.abs($(a).offset().left - $(b).offset().left) <= 10;	
 	}
 	function allowNavigation(source, direction){
 		if($(source).is("input:checkbox")) return true;
