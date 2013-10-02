@@ -4,8 +4,8 @@ This javascript allows you to navigate easily through the fields of a form in a 
 
 #### Quick Start
 
-Include jquery script and keyboard-nav.js[a relative link](html/javascript/keyboard-nav.js) into your html page and you are all done.
+Include jquery script and [keyboard-nav.js](html/javascript/keyboard-nav.js) into your html page and you are all done.
 
 #### Demo
 
-[a link](http://pramodshivale-samples.appspot.com/demos/keyboard-nav/)
+Demos are available [here](http://pramodshivale-samples.appspot.com/demos/keyboard-nav/).
