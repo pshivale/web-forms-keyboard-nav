@@ -1,4 +1,4 @@
-### Easy navigation through the form fields on a web page using keyboard arrow keys
+### Seemless navigation of web form fields using keyboard arrow keys
 
 This javascript allows you to navigate easily through the fields of a form in a web page fluidly by using keyboard arrow keys. It makes it very easy to navigate between the fields using arrow keys giving you the feeling of a native console app. It is especially useful when there are plenty of fields to fill out in a form.
 
